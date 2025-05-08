@@ -1,0 +1,86 @@
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "pulseaudio",
+    "backlight",
+    "battery",
+    "network",
+    "cpu",
+    "memory",
+    "tray",
+    "custom/lock",
+    "custom/power"
+  ],
+  "hyprland/workspaces": {
+    "format": "{name}: {icon}",
+    "format-icons": {
+      "active": "",
+      "default": ""
+    }
+  },
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10
+  },
+  "custom/music": {
+    "format": "  {}",
+    "escape": true,
+    "interval": 5,
+    "tooltip": false,
+    "exec": "playerctl metadata --format='{{ artist }} - {{ title }}'",
+    "on-click": "playerctl play-pause",
+    "max-length": 50
+  },
+  "clock": {
+    "timezone": "Europe/Berlin",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format": "{:%d/%m/%Y - %H:%M}"
+  },
+  "network": {
+    "format-wifi": "󰤢 ",
+    "format-ethernet": "󰈀 ",
+    "format-disconnected": "󰤠 ",
+    "interval": 5,
+    "tooltip": false
+  },
+  "cpu": {
+    "interval": 1,
+    "format": " {usage:>2}%"
+  },
+  "memory": {
+    "interval": 30,
+    "format": "  {used:0.1f}G/{total:0.1f}G"
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "",
+    "format-icons": {
+      "default": ["", "", " "]
+    },
+    "on-click": "pavucontrol"
+  },
+  "backlight": {
+    "format": "󰛨 {percent}%",
+    "tooltip": false
+  },
+  "battery": {
+    "format": "{icon} {capacity}%", // Default format with icon and capacity
+    "format-charging": "󰂄 {capacity}%", // Icon for charging (example: plug icon)
+    "format-plugged": "󰂄 {capacity}%",  // Icon when plugged in, not necessarily charging
+    "format-alt": "{time} {icon}", // Example alternative format on scroll
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"] // Icons for different battery levels (low to high)
+  },
+  "custom/lock": {
+    "tooltip": false,
+    "on-click": "sh -c '(sleep 0.5s; hyprlock)' & disown",
+    "format": ""
+  },
+  "custom/power": {
+    "tooltip": false,
+    "on-click": "systemctl suspend",
+    "format": "⏻"
+  }
+}
