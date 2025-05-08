@@ -1,0 +1,18 @@
+#!/bin/bash
+# Consider removing killall lines if portals behave well without them
+sleep 1
+killall -q xdg-desktop-portal-hyprland # -q silences "no process found" errors
+killall -q xdg-desktop-portal-wlr
+killall -q xdg-desktop-portal-gtk
+killall -q xdg-desktop-portal
+sleep 0.5 # Shorter sleep after killing
+
+# Start the backends first
+/usr/lib/xdg-desktop-portal-hyprland &
+sleep 0.2 # Small delay
+/usr/lib/xdg-desktop-portal-gtk &
+sleep 0.2 # Small delay
+
+# Start the main portal service last
+/usr/lib/xdg-desktop-portal &
+
