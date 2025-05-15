@@ -4,6 +4,11 @@ export SUDO_EDITOR="$EDITOR"
 
 export PATH=$PATH:/usr/local/go/bin
 
+# This helps ensure the variable is set early in the session.
+if systemctl --user is-active --quiet ssh-agent.service; then
+    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+fi
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=10000
