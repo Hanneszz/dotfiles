@@ -7,11 +7,11 @@
 - link:
     ~/.zshrc: _common/zshrc
     ~/.zshenv: _common/zshenv
-    ~/.shell: _common/shell
     ~/.gitconfig: _common/gitconfig
     ~/.config/starship.toml: _common/starship.toml
     ~/.config/ghostty/config: _common/ghostty.conf
     ~/.tmux.conf: _common/tmux.conf
+    ~/.config/nvim: nvim
     # --- Linux only ---
     ~/.config/waybar/config.jsonc:
       path: _linux/waybar/config.jsonc
