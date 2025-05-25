@@ -1,85 +1,34 @@
 - defaults:
-  link:
-    create: true  # create parent directories if they don't exist
-    relink: true  # Re-link if a symlink already exists but points elsewhere
-    # force: true  # Use with caution: overwrites existing files / symlinks 
-
-- clean:  # List dirctories/files dotbot should ensure are not actual files/dirs if a link is to be made there
-
-
-- create:  # Directories to create if they don't exist
-  - ~/.config  # Essential base directory
-
-- link:  # Symlinks would be defined here
-
-  # --- Shell configuration ---
-  ~/.zshrc: _common/zshrc  # my zsh settings
-  ~/.zshenv: _common/zshenv  # my zsh environment
-  ~/.zprofile: _common/zprofile  # zsh profile unused atm
-  ~/.shell: _common/shell
-  # --- Common applications ---
-  ~/.config/ghostty/config: _common/ghostty.conf
-  ~/.config/starship.toml: _common/starship.toml
-  ~/.tmux.conf: _common/tmux.conf
-  ~/.gitconfig: _common/gitconfig
-  ~/.gitignore_global: _common/gitignore_global
-
-  # --- Obsidian ---
-  ~/Library/Application Support/obsidian/obsidian.json:
-    path: _common/obsidian/obsidian.json
-    if: '[ "$(uname -s)" = "Darwin" ]'
-    force: true
-  ~/.config/obsidian/obsidian.json:
-    path: _common/obsidian/obsidian.json
-    if: '[ "$(uname -s)" = "Linux" ]'
-    force: true
-
-
-  # --- macOS specific configuration ---
-  ~/.config/.aerospace.toml:
-    path: _macos/aerospace.toml
-    if: '[ "$(uname -s)" = "Darwin" ]'
-
-
-  # --- Linux specific configuration ---
-  ~/.config/hypr/hyprland.conf:
-    path: _linux/hypr/hyprland.conf
-    if: '[ "$(uname -s)" = "Linux" ]'
-  ~/.config/hypr/hypridle.conf:
-    path: _linux/hypr/hypridle.conf
-    if: '[ "$(uname -s)" = "Linux" ]'
-  ~/.config/hypr/hyprlock.conf:
-    path: _linux/hypr/hyprlock.conf
-    if: '[ "$(uname -s)" = "Linux" ]'
-  ~/.config/waybar/config.jsonc:
-    path: _linux/waybar/config.jsonc
-    if: '[ "$(uname -s)" = "Linux" ]'
-  ~/.config/waybar/style.css:
-    path: _linux/waybar/style.css
-    if: '[ "$(uname -s)" = "Linux" ]'
-  ~/.config/rofi/config.rasi:
-    path: _linux/rofi/config.rasi
-    if: '[ "$(uname -s)" = "Linux" ]'
-
-
-- shell:
-  - description: Sync dotbot submodules
-    command: git submodule sync --quiet --recursive && git submodule update --init --recursive
-  - description: Install Homebrew and macOS packages
-    command: '[ "$(uname -s)" = "Darwin" ] && (installers/homebrew.sh && brew bundle --file=_macos/Brewfile && brew bundle --file=_macos/Brewfile_mas) || echo "Skipping macOS Homebrew install"'
-    stdout: true
-    stderr: true
-  - description: Install Arch Linux packages
-    command: '[ "$(uname -s)" = "Linux" ] && sudo installers/arch_packages.sh || echo "Skipping Arch package install"'
-    stdout: true
-    stderr: true
-  - descritption: Install Neovim configurations (Kickstart only for now)
-    command: installers/neovim_setup.sh
-    stdout: true
-    stderr: true
-  - description: Setup Oh My Zsh
-    command: installers/oh_my_zsh_setup.sh
-    stdout: true
-    stderr: true
-
+    link:
+      create: true
+      relink: true
+- create:
+    - ~/.config
+- link:
+    ~/.zshrc: _common/zshrc
+    ~/.zshenv: _common/zshenv
+    ~/.shell: _common/shell
+    ~/.gitconfig: _common/gitconfig
+    ~/.config/starship.toml: _common/starship.toml
+    ~/.config/ghostty/config: _common/ghostty.conf
+    ~/.tmux.conf: _common/tmux.conf
+    # --- Linux only ---
+    ~/.config/waybar/config.jsonc:
+      path: _linux/waybar/config.jsonc
+      if: '[ "$(uname -s)" = "Linux" ]'
+    ~/.config/waybar/style.css:
+      path: _linux/waybar/style.css
+      if: '[ "$(uname -s)" = "Linux" ]'
+    ~/.config/rofi/config.rasi:
+      path: _linux/rofi/config.rasi
+      if: '[ "$(uname -s)" = "Linux" ]'
+    ~/.config/hypr/hypridle.conf:
+      path: _linux/hypr/hypridle.conf
+      if: '[ "$(uname -s)" = "Linux" ]'
+    ~/.config/hypr/hyprland.conf:
+      path: _linux/hypr/hyprland.conf
+      if: '[ "$(uname -s)" = "Linux" ]'
+    ~/.config/hypr/hyprlock.conf:
+      path: _linux/hypr/hyprlock.conf
+      if: '[ "$(uname -s)" = "Linux" ]'
 
