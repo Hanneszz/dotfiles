@@ -11,8 +11,10 @@ export EDITOR="nvim"
 export SUDO_EDITOR="$EDITOR"
 
 # This helps ensure the variable is set early in the session.
-if systemctl --user is-active --quiet ssh-agent.service; then
-    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+if [[ "$(uname)" = "Linux" ]] then
+    if systemctl --user is-active --quiet ssh-agent.service; then
+    	export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+    fi
 fi
 
 # Lines configured by zsh-newuser-install
@@ -21,12 +23,6 @@ HISTSIZE=10000
 SAVEHIST=50000
 bindkey -e
 # End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-zstyle :compinstall filename '/home/hanneszz/.zshrc'
-
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -87,8 +83,27 @@ compinit
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting)
-source $ZSH/oh-my-zsh.sh
+plugins=(git zsh-syntax-highlighting brew)
+
+# Source Oh My Zsh if it's installed
+if [ -f "$ZSH/oh-my-zsh.sh" ]; then
+  source "$ZSH/oh-my-zsh.sh"
+else
+  echo "Oh My Zsh not found, skipping..." # Optional debug message
+fi
+
+# --- OS-specific fpath adjustments and general cleanup ---
+if [[ "$(uname)" == "Darwin" ]]; then # Darwin is the kernel name for macOS
+  # On macOS, remove /usr/local/share/zsh/site-functions from fpath
+  # as it's causing errors for _mullvad and isn't the primary Homebrew path.
+  # This uses Zsh's array manipulation: ${arrayname:#pattern_to_remove}
+  fpath=(${fpath:#\/usr\/local\/share\/zsh\/site-functions})
+fi
+
+# Make fpath unique (removes duplicates) - This is good for both OSes.
+typeset -U fpath
+# --- End fpath cleanup ---
+
 eval "$(starship init zsh)"
 # User configuration
 
